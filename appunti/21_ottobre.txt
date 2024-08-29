@@ -1,0 +1,20 @@
+
+
+Lista comandi:
+- arp (mostra contenuto cache arp, disponibile dopo ping/traceroute o comandi simili)
+- arp -d ipAddress, cancella indirizzo ip da arp table
+- vtysh, apre un prompt da cui posso ottenere molte informazioni (frr probabilmente, quit per uscire)
+- telnet localhost processo (si utilizza per "entrare" in un processo, ad es: telnet localhost zebra)
+
+Dopo essermi connesso a zebra tramite "telnet localhost zebra":
+inserisco password (zebra)
+- show ? (mostra tutti i comandi)
+- show ip (mostra tutte le operazioni con il comando ip)
+- show ip route (mostra tabella routing di zebra)
+
+Dopo essermi connesso a rip tramite "telnet localhost rip":
+- show ? (mostra tutti i comandi)
+- show ip rip(mostra tutte le operazioni con il comando ip)
+
+Il comando vtysh permette di accedere a molteplici demoni insieme (anche zebra e rip) ed eseguire comandi
+senza dover impostare una password.

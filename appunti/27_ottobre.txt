@@ -1,0 +1,2 @@
+comandi:
+Avviare demoni di routing su un router -> /etc/init.d/frr start (per ogni router)

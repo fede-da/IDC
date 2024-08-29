@@ -1,0 +1,4 @@
+Aggiungere sotto startup:
+
+!ifconfig eth0 10.0.0.1 netmask 255.255.255.0 broadcast
+!10.0.0.255 up

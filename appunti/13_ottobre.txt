@@ -1,0 +1,69 @@
+come avviare kathara:
+- andare su cartella lab dentro IDC/kathara
+- in caso modificare il file lab.conf da cui si gestiscono le interfacce
+- kathara lstart
+
+Sulle macchine virtuali :
+- ifconfig (mostra informazioni network)
+ - ifconfig eth0 10.0.0.xxx/24 (1,2,3 a lezione) up si setta indirizzo ip su interfaccia di rete eth0 
+	(da fare su tutte le macchine impostate nel caso a lezione pc1, pc2, pc3)
+ - ping IP per testare funzionamento
+
+
+Appunti lezione 13 ottobre:
+
+La macchina PC1 pinga r1 ma non r2, abbiamo verificato sul file lab.conf che tutte le interfacce siano settate correttamente
+quindi ora controlliamo che nella tabella di instradamento di PC1 ci sia il router r1 impostato come default (spoiler:
+non c'è quindi lo mettiamo noi)-> Errore "Network is unreachable" -> partono i pacchetti ma non tornano le risposte.
+
+Ora PC1 può mandare i pacchetti ad r1 verso r2 ma comunque non funziona, nessun pacchetto inviato torna indietro.
+
+Quindi ci posizioniamo su r1 ed attiviamo lo sniffer per vedere cosa succede ai pacchetti inviati da PC1 verso r1.
+
+r1 riceve tutti i pacchetti inviati da PC1 e, siccome nella tabella di instradamento ha entrambe le lan correttamente connesse
+alle sue 2 interfacce, li inoltra verso r2 ma non riceve pacchetti di risposta da quest'ultimo quindi andiamo a vedere r2.
+
+Apriamo subito la tabella di instradamento di r2 (route) e notiamo che non è presente la sottorete appartenente a PC1 ed r1 (195.11.14.0)
+quindi dobbiamo aggiungerla noi in maniera statica (dato che l'apprendimento dinamico al momento non è disponibile) questo è
+il motivo per cui non tornavano indietro i pacchetti su r1 proprio perchè r2 non sapeva a chi inviare la risposta.
+
+Dopo aver sistemato la sottorete su r2 riproviamo a pingare r2 da PC1 e vediamo che tutto funziona correttamente.
+
+Quindi tentiamo il ping da PC1 verso PC2 ma otteniamo "Destination Net unreachable" per ogni pacchetto inviato, quindi 
+ci spostiamo su r1 ed attiviamo lo sniffer sull'interfaccia eth0.
+
+(tcpdump... e rieffettuiamo il ping)
+
+Notiamo come sulla tabella di instradamento di r1 non compaia la sottorette a cui appartiene PC2, questo implica che r1
+non sa a chi inviare i pacchetti destinati a quella sottorete e per questo motivo emette l'errore precedentemente citato.
+
+Dunque aggiungiamo la sottorete, router di destinazione e interfaccia alla tabella e riproviamo.
+
+Questa volta abbiamo un errore diverso ovvero i pacchetti vengono tutti trasmessi ma non ci sono pacchetti di risposta,
+questo perchè PC2 non ha settato il router di "default", quindi lo settiamo con i 3 parametri richiesti.
+
+Effettuiamo nuovamente il ping e tutto funziona.
+
+
+Comandi visti 13 ottobre (1a esercitazione kathara "static routing"):
+- route (mostra tabella routing)
+(in caso ping non riuscito forse bisogna aggiornare la tabella di routing).
+
+- route add -net gw routerIndirizzoIP dev interfaccia 
+	(ad es: route add -net default gw 195.11.14.1 dev eth0) 
+	aggiunge un router con la relativa interfaccia alla tabella, in questo caso è gw di default.
+	
+- tcpdump -tenni interfaccia (Ad es: tcpdump -tenni eth0, attiva lo SNIFFER sull'interfaccia impostata).
+
+- route add IP/netmask gw routerIP dev interfaccia (ad es: route add 195.11.14.0/24 gw 100.0.0.9 dev eth1
+ dove aggiungiamo una nuova sottorete con relativo gateway e porta alla tabella di instradamento del dispositivo corrente).
+ 
+ - traceroute IP_Address, ci mostra tutti i router (hop) attraversati dal pacchetto inviato verso IP_Address.
+ 
+ - tcpdump -tenni interfaccia -w nomefile.pcap (effettua tcpdump e scrive l'output su nomefile, questo verrà
+ creato all'interno della cartella condivisa "shared" a quel punto possiamo aprire il file con wireshark.
+ 
+ 
+ 
+
+	

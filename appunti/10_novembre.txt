@@ -1,0 +1,6 @@
+Configurare kathara da terminale con:
+- kathara settings
+Poi andare su:
+- Choose default image (il numero può variare in base al sistema operativo)
+E sceglere kathara/frr quindi chiudere
+Show ip bgp

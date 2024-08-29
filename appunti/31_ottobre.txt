@@ -1,0 +1,7 @@
+sh ip ospf database -> Mostra router e lan salvate dal router (vedo router designato)
+
+sh ip ospf database router 
+
+sh ip ospf database network 
+
+sh ip ospf database summary

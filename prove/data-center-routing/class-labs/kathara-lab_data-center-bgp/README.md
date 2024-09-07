@@ -1,0 +1,1 @@
+I file di configurazione delle ToF (per protocollo BGP) sono uguali tra una ToF e l'altra. basta fare copia-incolla ed al più cambiare Id ed AS.

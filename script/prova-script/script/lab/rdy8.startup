@@ -1,9 +1,0 @@
-/sbin/ifconfig en0 50.3.8.8 netmask 255.255.255.0 up
-/sbin/ifconfig en1 8.8.8.8 netmask 255.255.255.128 up
-launchctl load /Library/LaunchDaemons/org.frrouting.frr.plist
-/sbin/ifconfig eth0 50.3.8.8 netmask 255.255.255.0 up
-/sbin/ifconfig eth1 8.8.8.8 netmask 255.255.255.128 up
-/etc/init.d/frr start
-/sbin/ifconfig en0 50.3.8.8 netmask 255.255.255.0 up
-/sbin/ifconfig en1 8.8.8.8 netmask 255.255.255.128 up
-/etc/init.d/frr start
